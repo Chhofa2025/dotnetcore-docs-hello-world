@@ -1,7 +1,16 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+// Enable runtime compilation during Development so changes to .cshtml are picked up
+// without rebuilding the project. In Production we keep precompiled views for performance.
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+}
+else
+{
+    builder.Services.AddRazorPages();
+}
 
 var app = builder.Build();
 
